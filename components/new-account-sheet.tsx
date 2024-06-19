@@ -1,8 +1,8 @@
 import {z} from "zod";
-import { useNewAccount } from "@/features/accounts/api/hooks/use-new-accounts";
+import { useNewAccount } from "@/features/accounts/hooks/use-new-accounts";
 import { AccountForm } from "./account-form";
 import { insertAccountSchema } from "@/db/schema";
-import { useCreateAccount } from "@/features/accounts/api/use-create-accounts";
+import { useCreateAccount } from "@/features/accounts/api/use-create-account";
 
 import {
     Sheet,

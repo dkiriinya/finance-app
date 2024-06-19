@@ -1,6 +1,6 @@
 "use client"
 
-import { useNewAccount } from "@/features/accounts/api/hooks/use-new-accounts";
+import { useNewAccount } from "@/features/accounts/hooks/use-new-accounts";
 import { columns } from "./columns";
 
 import { Button } from "@/components/ui/button";
