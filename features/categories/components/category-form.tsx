@@ -3,8 +3,8 @@ import { Trash } from "lucide-react";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";  
 
-import {Input} from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { insertCategorySchema } from "@/db/schema";
 
 import {
@@ -14,7 +14,7 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-}from "./ui/form"
+}from "@/components/ui/form"
 import { Console } from "console";
 
 const formSchema = insertCategorySchema.pick({

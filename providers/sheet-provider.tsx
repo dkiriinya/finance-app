@@ -1,9 +1,9 @@
 "use client"
-import { NewAccountSheet } from "@/components/new-account-sheet";
-import { EditAccountSheet } from "@/components/edit-account-sheet";
+import { NewAccountSheet } from "@/features/accounts/components/new-account-sheet";
+import { EditAccountSheet } from "@/features/transactions/components/edit-account-sheet";
 
-import { NewCategorySheet } from "@/components/new-category-sheet";
-import { EditCategorySheet } from "@/components/edit-category-sheet";
+import { NewCategorySheet } from "@/features/categories/components/new-category-sheet";
+import { EditCategorySheet } from "@/features/categories/components/edit-category-sheet";
 
 import { NewTransactionSheet } from "@/features/transactions/components/new-transaction-sheet";
 
