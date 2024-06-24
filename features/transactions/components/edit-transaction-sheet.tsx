@@ -1,6 +1,6 @@
 import {z} from "zod";
 import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
-import { AccountForm } from "./transaction-form";
+import { TransactionForm } from "./transaction-form";
 import { insertAccountSchema } from "@/db/schema";
 import { useEditAccount } from "@/features/accounts/api/use-edit-account";
 import { useDeleteAccount } from "@/features/accounts/api/use-delete-account";
@@ -81,7 +81,7 @@ export const EditAccountSheet = () => {
                             <Loader2 className="size-4 text-muted-foreground animate-spin"/>
                         </div>
                     ):(
-                        <AccountForm 
+                        <TransactionForm 
                         id={id}
                         onSubmit={onSubmit}
                         disabled={isPending}

@@ -15,6 +15,13 @@
       "when": 1719046382322,
       "tag": "0001_round_runaways",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1719162112134,
+      "tag": "0002_daily_black_widow",
+      "breakpoints": true
     }
   ]
 }

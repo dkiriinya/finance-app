@@ -6,13 +6,13 @@ import { useEditAccount } from "@/features/accounts/api/use-edit-account";
 import { useDeleteAccount } from "@/features/accounts/api/use-delete-account";
 import { useConfirm } from "@/hooks/use-confirm";
 
-import {
+import { 
     Sheet,
     SheetContent,
     SheetDescription,
     SheetHeader,
     SheetTitle,
-} from "@/components/ui/sheet";
+ } from "@/components/ui/sheet"; 
 import { useGetAccount } from "@/features/accounts/api/use-get-account";
 import { Loader2 } from "lucide-react";
 
