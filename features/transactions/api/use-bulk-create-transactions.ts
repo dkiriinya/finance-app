@@ -15,16 +15,18 @@ export const useBulkCreateTransactions = () => {
     RequestType
   >({
     mutationFn: async (json) => {
+      console.log("Sending payload:", json);
       const response = await client.api.transactions["bulk-create"]["$post"]({
         json})
-      return await response.json();
+        const result = await response.json();
+        return result;
     },
     onSuccess: () => {
-        toast.success("Transaction(s) created successfully");
+        toast.success("Transactions created successfully");
         queryClient.invalidateQueries({queryKey: ["transactions"]});
     },
     onError: () => {
-      toast.error("Failed to create transaction(s)");
+      toast.error("Failed to create transactions");
     }
   });
   return mutation;

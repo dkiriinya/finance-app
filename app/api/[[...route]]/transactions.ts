@@ -178,6 +178,8 @@ const app = new Hono()
             const auth = getAuth(c);
             const values = c.req.valid("json");
 
+            console.log("Received bulk-create request:", values);
+
             if (!auth?.userId) {
                 return c.json({ error: "Unauthorized" }, 401);
             }
@@ -185,12 +187,14 @@ const app = new Hono()
             const data = await db
                 .insert(transactions)
                 .values(
-                    values.map((transaction) => ({
-                        ...transaction,
+                    values.map((value) => ({
                         id: createId(),
+                        ...value,
                     }))
                 )
                 .returning();
+
+                console.log('Data From Server: ',data)
 
             return c.json({ data });
         },
