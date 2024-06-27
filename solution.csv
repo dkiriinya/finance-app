@@ -1,0 +1,21 @@
+Type,Product,Started Date,Completed Date,Description,Amount,Fee,Currency,State,Balance
+transfer,Book,2024-06-20 16:10:16,2024-07-13 16:10:16,Transferred funds,384.97,6.13,GBP,cancelled,5948.51
+transfer,Book,2024-06-04 04:03:15,2024-06-15 04:03:15,Refund for electronics,438.5,8.62,USD,pending,8394.16
+purchase,Groceries,2024-06-12 20:35:56,2024-07-08 20:35:56,Refund for electronics,198.15,16.14,GBP,pending,5168.58
+transfer,Furniture,2024-06-05 04:45:41,2024-06-13 04:45:41,Withdrew cash,168.66,6.3,GBP,completed,7606.21
+purchase,Clothing,2024-06-02 19:48:38,2024-07-01 19:48:38,Bought a book,454.44,18.5,AUD,completed,6706.18
+withdrawal,Electronics,2024-06-04 14:48:19,2024-06-22 14:48:19,Deposited salary,129.4,5.46,GBP,cancelled,906.54
+withdrawal,Electronics,2024-06-10 03:01:34,2024-06-14 03:01:34,Withdrew cash,383.99,11.21,USD,failed,2845.41
+transfer,Groceries,2024-06-16 21:14:26,2024-07-01 21:14:26,Deposited salary,139.31,15.63,JPY,failed,1513.1
+deposit,Groceries,2024-06-01 04:26:39,2024-06-26 04:26:39,Bought a book,427.03,7.36,EUR,completed,2199.8
+transfer,Electronics,2024-06-22 10:24:43,2024-07-03 10:24:43,Refund for electronics,253.74,11.96,JPY,completed,2836.0
+transfer,Clothing,2024-06-12 09:36:53,2024-06-24 09:36:53,Bought a book,152.34,14.27,GBP,failed,9985.36
+withdrawal,Electronics,2024-06-03 01:39:04,2024-06-07 01:39:04,Bought a book,43.73,7.04,EUR,failed,3504.1
+transfer,Groceries,2024-06-08 13:05:03,2024-07-03 13:05:03,Withdrew cash,260.52,1.9,AUD,pending,7335.63
+deposit,Groceries,2024-06-23 06:14:04,2024-06-25 06:14:04,Withdrew cash,342.31,8.48,AUD,pending,4982.66
+withdrawal,Book,2024-06-16 14:48:01,2024-06-18 14:48:01,Transferred funds,280.76,15.37,AUD,cancelled,3793.21
+transfer,Furniture,2024-06-12 02:42:34,2024-06-19 02:42:34,Deposited salary,69.74,17.41,GBP,completed,2683.84
+purchase,Book,2024-06-24 07:04:44,2024-07-18 07:04:44,Bought a book,10.96,18.09,USD,pending,7547.03
+withdrawal,Electronics,2024-06-08 18:22:41,2024-06-22 18:22:41,Deposited salary,119.89,2.55,GBP,completed,9477.59
+refund,Furniture,2024-06-24 14:30:45,2024-07-20 14:30:45,Refund for electronics,478.3,9.8,EUR,completed,2467.39
+purchase,Groceries,2024-06-08 06:13:28,2024-06-12 06:13:28,Refund for electronics,29.3,15.48,USD,completed,4059.12
