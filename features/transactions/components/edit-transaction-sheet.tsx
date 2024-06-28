@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sheet";
 import { useGetTransaction } from "../api/use-get-transaction";
 import { Loader2 } from "lucide-react";
-import { convertAmountFromMiliunits } from "@/lib/utils";
+
 
 
 
@@ -94,14 +94,10 @@ export const EditTransactionSheet = () => {
         }
     }
 
-    const amount = transactionQuery.data?.amount || 0;
-    const amountFromMiliunits = convertAmountFromMiliunits(amount);
-
-
     const defaultValues = transactionQuery.data ? {
        accountId:transactionQuery.data.accountId,
        categoryId:transactionQuery.data.categoryId,
-       amount:amountFromMiliunits.toString(),
+       amount:transactionQuery.data.amount.toString(),
        date:transactionQuery.data.date
             ? new Date(transactionQuery.data.date)
             :new Date(),
