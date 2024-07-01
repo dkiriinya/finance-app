@@ -25,7 +25,7 @@ import { useState } from "react";
 import { useSelectAccount } from "@/features/accounts/hooks/use-select-account";
 import { toast } from "sonner";
 import { useBulkCreateTransactions } from "@/features/transactions/api/use-bulk-create-transactions";
-
+import {ExportButton} from "./export-button";
 enum VARIANTS {
     LIST = "LIST",
     IMPORT = "IMPORT"
@@ -57,6 +57,7 @@ const TransactionsPage = () => {
     const createTransactions = useBulkCreateTransactions();
     const transactionsQuery = useGetTransactions();
     const transactions = transactionsQuery.data || [];
+    console.log('transactions: ',transactions)
     const deleteTransactions = useBulkDeleteTransactions();
 
     const isDisabled = transactionsQuery.isLoading || deleteTransactions.isPending;
@@ -74,7 +75,6 @@ const TransactionsPage = () => {
             ...value,
             accountId: accountId as string,
         }));
-        console.log(data)
         createTransactions.mutate(data, {
             onSuccess: () => {
                onCancelImport();
@@ -130,6 +130,7 @@ const TransactionsPage = () => {
                         <UploadButton
                             onUpload = {onUpload}
                         />
+                        <ExportButton data={transactions} />
                     </div> 
                 </CardHeader>
                 <CardContent className="pt-0">
