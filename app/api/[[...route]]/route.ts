@@ -5,6 +5,7 @@ import accounts from './accounts'
 import categories from './categories'
 import transactions from './transactions'
 import summary from './summary'
+import mpesa_statements_pdfs from './mpesa_statements_pdfs'
 
 export const runtime = 'edge';
 
@@ -15,6 +16,7 @@ const routes = app
     .route("/categories", categories)
     .route("/transactions", transactions)
     .route("/summary", summary)
+    .route("/mpesa_statements_pdfs",mpesa_statements_pdfs)
 
     
 export const GET = handle(app)

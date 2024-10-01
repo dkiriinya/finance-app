@@ -26,6 +26,7 @@ import { useSelectAccount } from "@/features/accounts/hooks/use-select-account";
 import { toast } from "sonner";
 import { useBulkCreateTransactions } from "@/features/transactions/api/use-bulk-create-transactions";
 import {ExportButton} from "./export-button";
+import { UploadFile } from "@/components/upload-file";
 enum VARIANTS {
     LIST = "LIST",
     IMPORT = "IMPORT"
@@ -131,13 +132,14 @@ const TransactionsPage = () => {
                             onUpload = {onUpload}
                         />
                         <ExportButton data={transactions} />
+                        <UploadFile />
                     </div> 
                 </CardHeader>
                 <CardContent className="pt-0">
                     <DataTable 
                         data={transactions}
                         columns={columns}
-                        filterKey="date" 
+                        filterKey="payee" 
                         onDelete={(row) => {
                             const ids = row.map((r)=>r.original.id);
                             deleteTransactions.mutate({ids});

@@ -1,5 +1,5 @@
 import {z} from 'zod'
-import { integer, pgTable,text,timestamp } from "drizzle-orm/pg-core";
+import { integer, pgTable,text,timestamp,varchar } from "drizzle-orm/pg-core";
 import {createInsertSchema} from "drizzle-zod";
 import {relations} from 'drizzle-orm'
 
@@ -53,3 +53,18 @@ export const transactionsRelations = relations(transactions, ({one})=>({
 export const insertTransactionSchema = createInsertSchema(transactions,{
     date:z.coerce.date(),
 });
+
+export const mpesa_statements_pdfs = pgTable("mpesa_statements_pdfs",{
+    id: text("id").primaryKey(),
+    pdf_url: varchar("pdf_file", { length: 255 }).notNull(),
+    pdf_password: varchar("pdf_password", { length: 6 }).notNull(), 
+    strapiId:integer("strapiId").notNull(),
+    userId:text("userId").notNull()
+})
+
+export const insertMpesaStatementsPdfsSchema = createInsertSchema(mpesa_statements_pdfs,{
+    pdf_password: z
+    .string()
+    .length(6, "Password must be exactly 6 digits") 
+    .regex(/^\d+$/, "Password must be numeric"), 
+})
