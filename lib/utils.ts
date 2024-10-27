@@ -1,3 +1,5 @@
+import crypto from 'crypto';
+
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { eachDayOfInterval, isSameDay, subDays, format } from "date-fns";
@@ -98,4 +100,12 @@ export function formatPercentage(
   }
 
   return result
+}
+
+export function verifySignature(body: unknown, signature: string): boolean {
+  const hash = crypto.createHmac('sha512', process.env.PAYSTACK_SECRET_KEY!)
+    .update(JSON.stringify(body))
+    .digest('hex');
+  
+  return hash === signature;
 }

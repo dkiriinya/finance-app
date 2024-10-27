@@ -1,6 +1,6 @@
 {
-  "id": "365ffc91-b97e-4c0b-ae5d-1f4f17bd2957",
-  "prevId": "35a29c8b-c95b-45a1-ab45-77101ebcf2a9",
+  "id": "d07e113e-a65b-486d-9f64-8622e0309135",
+  "prevId": "3fb631fd-1a26-4cbd-9fa3-f2b995279cb8",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -72,6 +72,104 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
+    "public.mpesa_statements_pdfs": {
+      "name": "mpesa_statements_pdfs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "pdf_file": {
+          "name": "pdf_file",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pdf_password": {
+          "name": "pdf_password",
+          "type": "varchar(6)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "strapiId": {
+          "name": "strapiId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.subscriptions": {
+      "name": "subscriptions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "paystackId": {
+          "name": "paystackId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subscription_status": {
+          "name": "subscription_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "next_payment_date": {
+          "name": "next_payment_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subscription_code": {
+          "name": "subscription_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "isPaid": {
+          "name": "isPaid",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email_token": {
+          "name": "email_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "public.transactions": {
       "name": "transactions",
       "schema": "",
@@ -114,12 +212,6 @@
         },
         "account_id": {
           "name": "account_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "user_id": {
-          "name": "user_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true

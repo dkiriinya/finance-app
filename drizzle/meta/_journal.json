@@ -5,29 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1718865568544,
-      "tag": "0000_luxuriant_praxagora",
+      "when": 1729998385011,
+      "tag": "0000_curvy_the_hood",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1719046382322,
-      "tag": "0001_round_runaways",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1719162112134,
-      "tag": "0002_daily_black_widow",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1727727806928,
-      "tag": "0003_parallel_toad",
+      "when": 1729998612215,
+      "tag": "0001_spicy_lady_ursula",
       "breakpoints": true
     }
   ]
