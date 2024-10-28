@@ -20,7 +20,6 @@ export function Help_Section() {
           <span className="text-sm">support@example.com</span>
         </div>
         <form className="space-y-4">
-          <Input placeholder="Your email" type="email" />
           <Textarea placeholder="How can we help you?" />
           <Button className="w-full">
             <MessageSquare className="mr-2 h-4 w-4" /> Send Message

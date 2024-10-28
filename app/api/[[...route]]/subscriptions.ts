@@ -29,10 +29,6 @@ const app = new Hono()
                 .select()
                 .from(subscriptions)
                 .where(eq(subscriptions.userId,auth.userId))
-            
-                if (!data){
-                    return c.json({error:"subscription not found"},404)
-                }
             return c.json({data});
         }
     )

@@ -20,13 +20,16 @@ import { Loader2 } from "lucide-react";
 import { UploadButton } from "./upload-button";
 import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transactions";
 import { ImportCard } from "./import-card";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { useUser } from "@clerk/nextjs";
 
 import { useSelectAccount } from "@/features/accounts/hooks/use-select-account";
 import { toast } from "sonner";
 import { useBulkCreateTransactions } from "@/features/transactions/api/use-bulk-create-transactions";
 import {ExportButton} from "./export-button";
 import { UploadFile } from "@/components/upload-file";
+import { useGetSubscription } from "@/features/subscriptions/api/use-get-subscription";
+import {PaywallDialog} from "@/features/subscriptions/components/paywall-dialog";
 enum VARIANTS {
     LIST = "LIST",
     IMPORT = "IMPORT"
@@ -43,6 +46,24 @@ const TransactionsPage = () => {
     const [variant,setVariant] = useState<VARIANTS>(VARIANTS.LIST);
     const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS)
 
+    const paywallFeatures = [
+        { featureName: 'Upload a spreadsheet', description: 'Unlock the upload spreadsheet function', price: '299' },
+        { featureName: 'Export transactions to a spreadsheet', description: 'Unlock exporting files as spreadsheets function', price: '299' },
+        { featureName: 'Upload m-pesa transactions', description: 'Unlock Mpesa File Uploads function', price: '299' },
+    ];
+
+    const { user, isLoaded } = useUser();
+    const [userId, setUserId] = useState<string | undefined>(undefined);
+  
+    useEffect(() => {
+      if (user?.id && isLoaded) {
+        setUserId(user.id); 
+      }
+    }, [user, isLoaded]);
+  
+    const subscriptionQuery = useGetSubscription(userId);
+    const subscription = subscriptionQuery.data;
+
     const onUpload = (results: typeof INITIAL_IMPORT_RESULTS) => {
         setImportResults(results);
         setVariant(VARIANTS.IMPORT);
@@ -58,7 +79,6 @@ const TransactionsPage = () => {
     const createTransactions = useBulkCreateTransactions();
     const transactionsQuery = useGetTransactions();
     const transactions = transactionsQuery.data || [];
-    console.log('transactions: ',transactions)
     const deleteTransactions = useBulkDeleteTransactions();
 
     const isDisabled = transactionsQuery.isLoading || deleteTransactions.isPending;
@@ -121,19 +141,37 @@ const TransactionsPage = () => {
             <Card className="border-none drop-shadow-sm">
                 <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
                     <CardTitle className="text-xl line-clamp-1">Transaction History</CardTitle>
-                    <div className="flex flex-col lg:flex-row items-center gap-y-2 gap-x-2">
-                        <Button 
-                            onClick={newTransaction.onOpen}
-                            size="sm"
-                            className="w-full lg:w-auto">
-                            Add new
-                        </Button>
-                        <UploadButton
-                            onUpload = {onUpload}
-                        />
-                        <ExportButton data={transactions} />
-                        <UploadFile />
-                    </div> 
+                    
+                        {
+                            subscription?.isPaid? (
+                                <div className="flex flex-col lg:flex-row items-center gap-y-2 gap-x-2">
+                                    <Button 
+                                        onClick={newTransaction.onOpen}
+                                        size="sm"
+                                        className="w-full lg:w-auto">
+                                        Add new transaction
+                                    </Button>
+                                    <UploadButton
+                                        onUpload = {onUpload}
+                                    />
+                                    <ExportButton data={transactions} />
+                                    <UploadFile /> 
+                                </div>):
+                                (
+                                    <div className="flex flex-col lg:flex-row items-center gap-y-2 gap-x-2">
+                                         <Button 
+                                            onClick={newTransaction.onOpen}
+                                            size="sm"
+                                            className="w-full lg:w-auto">
+                                            Add new transaction
+                                        </Button>
+                                        {paywallFeatures.map((feature) => (
+                                           <PaywallDialog 
+                                            featureName={feature.featureName} />
+                                        ))}
+                                    </div>
+                                )
+                        }
                 </CardHeader>
                 <CardContent className="pt-0">
                     <DataTable 

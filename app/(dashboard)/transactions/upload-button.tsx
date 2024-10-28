@@ -18,7 +18,7 @@ export const UploadButton = ({onUpload}:Props) => {
                     {...getRootProps()}
                     >
                     <Upload className="size-4 mr-2" />
-                    Import
+                    Upload a spreadsheet
                 </Button>
             )}
         </CSVReader>

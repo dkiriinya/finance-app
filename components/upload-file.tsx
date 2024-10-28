@@ -66,7 +66,7 @@ export function UploadFile() {
         <Button
          size="sm"
          color="#20C073"
-         className="w-full lg:w-auto bg-custom-green hover:bg-green-600">M-Pesa</Button>
+         className="w-full lg:w-auto bg-custom-green hover:bg-green-600">Upload M-Pesa Transactions</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

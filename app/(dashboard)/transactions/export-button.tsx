@@ -48,7 +48,7 @@ export const ExportButton = ({ data }: Props) => {
   return (
     <Button onClick={filterColumns} size="sm" className="w-full lg:w-auto" disabled={disabled}>
       <DownloadIcon className="size-4 mr-2" />
-      Export
+      Export transactions to a spreadsheet
     </Button>
   );
 };
