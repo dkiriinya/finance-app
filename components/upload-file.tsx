@@ -72,7 +72,7 @@ export function UploadFile() {
         <DialogHeader>
           <DialogTitle>Upload File</DialogTitle>
           <DialogDescription>
-            Please select your Mpesa statement file to upload and enter the file's password.
+            Please select your Mpesa statement file to upload and enter the file&apos;s password.
           </DialogDescription>
         </DialogHeader>
         <UploadFileForm

@@ -90,10 +90,9 @@ export function PaywallDialog({
           </div>
           <DialogFooter className="flex-col sm:flex-row gap-2">
             <Button className="w-full sm:w-auto" onClick={() => {
-              <SubscriptionForm />
               setIsOpen(false)
             }}>
-              Upgrade Now for {price}
+              <SubscriptionForm />
             </Button>
             <Button type="button" variant="secondary" className="w-full sm:w-auto" onClick={() => setIsOpen(false)}>
               Maybe Later
@@ -134,10 +133,9 @@ export function PaywallDialog({
         </div>
         <DialogFooter className="flex-col sm:flex-row gap-2">
           <Button className="w-full sm:w-auto" onClick={() => {
-            <SubscriptionForm />
             setIsOpen(false)
           }}>
-            Upgrade Now for {price}
+            <SubscriptionForm />
           </Button>
           <Button type="button" variant="secondary" className="w-full sm:w-auto" onClick={() => setIsOpen(false)}>
             Maybe Later

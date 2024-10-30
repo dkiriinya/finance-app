@@ -47,9 +47,9 @@ const TransactionsPage = () => {
     const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS)
 
     const paywallFeatures = [
-        { featureName: 'Upload a spreadsheet', description: 'Unlock the upload spreadsheet function', price: '299' },
-        { featureName: 'Export transactions to a spreadsheet', description: 'Unlock exporting files as spreadsheets function', price: '299' },
-        { featureName: 'Upload m-pesa transactions', description: 'Unlock Mpesa File Uploads function', price: '299' },
+        {id: '1', featureName: 'Upload a spreadsheet', description: 'Unlock the upload spreadsheet function', price: '299' },
+        {id: '2', featureName: 'Export transactions to a spreadsheet', description: 'Unlock exporting files as spreadsheets function', price: '299' },
+        {id: '3', featureName: 'Upload m-pesa transactions', description: 'Unlock Mpesa File Uploads function', price: '299' },
     ];
 
     const { user, isLoaded } = useUser();
@@ -166,7 +166,8 @@ const TransactionsPage = () => {
                                             Add new transaction
                                         </Button>
                                         {paywallFeatures.map((feature) => (
-                                           <PaywallDialog 
+                                           <PaywallDialog
+                                            key={feature.id}
                                             featureName={feature.featureName} />
                                         ))}
                                     </div>

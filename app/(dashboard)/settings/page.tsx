@@ -20,8 +20,6 @@ export default function SettingsPage() {
   }, [user, isLoaded]);
 
   const subscriptionQuery = useGetSubscription(userId);
-  const subscription = subscriptionQuery.data;
-
 
   if (subscriptionQuery.isLoading) {
     return (
@@ -91,7 +89,11 @@ export default function SettingsPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="md:col-span-2 space-y-4">
               <Help_Section />
-              <SubscriptionStatus initialSubscribed={subscription?.isPaid} />
+              <SubscriptionStatus 
+                subscription_status={subscriptionQuery.data?.subscription_status ?? ""}
+                next_payment_date={new Date(subscriptionQuery.data?.next_payment_date ?? Date.now())}
+                isPaid={subscriptionQuery.data?.isPaid ?? false}
+              />
             </div>
             <div>
               <Faqs />

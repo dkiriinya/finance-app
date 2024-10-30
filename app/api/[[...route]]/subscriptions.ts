@@ -79,7 +79,7 @@ const app = new Hono()
     
                         const [chargeData] = await db
                             .update(subscriptions)
-                            .set({ isPaid: true, next_payment_date })
+                            .set({ isPaid: true, next_payment_date, subscription_status:"active" })
                             .where(eq(subscriptions.paystackId, paystackId))
                             .returning();
                         return c.json({ chargeData });
@@ -105,7 +105,8 @@ const app = new Hono()
                         if (!existingSubscription.subscription_code && subscription_code) {
                             const [updatedData] = await db
                                 .update(subscriptions)
-                                .set({ subscription_code })
+                                .set({ subscription_code,
+                                 })
                                 .where(eq(subscriptions.paystackId, paystackId))
                                 .returning();
                             return c.json({ updatedData });
@@ -141,7 +142,7 @@ const app = new Hono()
                     if (existingSubscription) {
                         const [notRenewData] = await db
                             .update(subscriptions)
-                            .set({ subscription_status: 'not_renew' })
+                            .set({ subscription_status: 'not renewing' })
                             .where(eq(subscriptions.paystackId, paystackId))
                             .returning();
                         return c.json({ data: notRenewData });
@@ -164,7 +165,7 @@ const app = new Hono()
                     if (existingSubscription) {
                         const [failedInvoiceData] = await db
                             .update(subscriptions)
-                            .set({ isPaid: false, subscription_status: 'payment_failed' })
+                            .set({ isPaid: false, subscription_status: 'payment failed' })
                             .where(eq(subscriptions.paystackId, paystackId))
                             .returning();
                         return c.json({ failedInvoiceData });
