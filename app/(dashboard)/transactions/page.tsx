@@ -149,7 +149,7 @@ const TransactionsPage = () => {
                                         onClick={newTransaction.onOpen}
                                         size="sm"
                                         className="w-full lg:w-auto">
-                                        Add new transaction
+                                        Add new
                                     </Button>
                                     <UploadButton
                                         onUpload = {onUpload}

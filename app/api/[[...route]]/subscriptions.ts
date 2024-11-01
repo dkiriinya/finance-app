@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { Hono } from 'hono';
 import { db } from '@/db/drizzle';
-import { eq } from 'drizzle-orm';
-import {subscriptions } from '@/db/schema';
+import { and,eq } from 'drizzle-orm';
+import {insertSubscriptionsSchema, subscriptions } from '@/db/schema';
 import { clerkMiddleware, getAuth } from '@hono/clerk-auth';
 import { zValidator } from '@hono/zod-validator';
 import { verifySignature } from '@/lib/utils';
@@ -43,17 +43,12 @@ const app = new Hono()
     
             const paystackId = body?.data?.customer?.customer_code;
             const event = body.event;
-            console.log("event: ",event)
-            console.log("data: ",body?.data)
     
             if (!paystackId) {
                 return c.json({ message: 'Missing Paystack ID' }, 400);
             }
     
-            let userId = "";
-            if (body?.data?.metadata?.custom_fields && Array.isArray(body.data.metadata.custom_fields) && body.data.metadata.custom_fields.length > 0) {
-                userId = body.data.metadata.custom_fields[0].value;
-            }
+            let userId = body?.data?.customer?.phone;
     
             const subscription_code = body?.data?.subscription_code || "";
             const next_payment_date = body?.data?.next_payment_date
@@ -68,15 +63,6 @@ const app = new Hono()
             switch (event) {
                 case 'charge.success':
                     if (existingSubscription) {
-                        if (!existingSubscription.userId && userId) {
-                            const [chargeData] = await db
-                                .update(subscriptions)
-                                .set({ userId, isPaid: true, next_payment_date, subscription_status: 'active' })
-                                .where(eq(subscriptions.paystackId, paystackId))
-                                .returning();
-                            return c.json({ chargeData });
-                        }
-    
                         const [chargeData] = await db
                             .update(subscriptions)
                             .set({ isPaid: true, next_payment_date, subscription_status:"active" })
@@ -84,34 +70,16 @@ const app = new Hono()
                             .returning();
                         return c.json({ chargeData });
                     } 
-                    
-                    else {
-                        const [newSubscription] = await db
-                            .insert(subscriptions)
-                            .values({
-                                id: createId(),
-                                paystackId,
-                                isPaid: true,
-                                next_payment_date,
-                                userId,
-                                subscription_status: 'active'
-                            })
-                            .returning();
-                        return c.json({ newSubscription });
-                    }
+                    return c.json({ message: 'Subscription not found' }, 404);
     
                 case 'subscription.create':
                     if (existingSubscription) {
-                        if (!existingSubscription.subscription_code && subscription_code) {
-                            const [updatedData] = await db
-                                .update(subscriptions)
-                                .set({ subscription_code,
-                                 })
-                                .where(eq(subscriptions.paystackId, paystackId))
-                                .returning();
-                            return c.json({ updatedData });
-                        }
-                        return c.json({ message: 'Subscription already exists' });
+                        const [chargeData] = await db
+                        .update(subscriptions)
+                        .set({ subscription_code,email_token:body?.data?.email_token })
+                        .where(eq(subscriptions.paystackId, paystackId))
+                        .returning();
+                    return c.json({ chargeData });
                     } else {
                         const [newSubscriptionData] = await db
                             .insert(subscriptions)
@@ -121,7 +89,9 @@ const app = new Hono()
                                 subscription_code,
                                 subscription_status: 'active',
                                 next_payment_date,
-                                isPaid: true
+                                isPaid: true,
+                                email_token: body?.data?.email_token,
+                                userId: userId,
                             })
                             .returning();
                         return c.json({ newSubscriptionData });
@@ -178,10 +148,63 @@ const app = new Hono()
         } catch (error) {
             
             const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-            console.log(errorMessage)
             return c.json({ message: 'Error processing webhook', error: errorMessage }, 500);
         }
     })
+    .patch('/:id',
+        clerkMiddleware(),
+        zValidator("param", z.object({
+            id: z.string().optional(),
+        })),
+        zValidator("json",
+            insertSubscriptionsSchema.pick({
+                subscription_code: true,
+                email_token: true
+            })
+        ),
+        async (c) => {
+            const { id } = c.req.valid("param");
+            
+            const auth = getAuth(c);
+    
+            const values = c.req.valid("json");
+    
+            if (!id) {
+                return c.json({ message: "Missing id" }, 400);
+            }
+    
+            if (!auth?.userId) {
+                return c.json({ message: "Unauthorized" }, 401);
+            }
+    
+            try {
+                const payload = new URLSearchParams();
+                payload.append('code', values.subscription_code ?? "");
+                payload.append('token', values.email_token ?? "");
+    
+                const response = await fetch('https://api.paystack.co/subscription/disable', {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Accept': 'application/json',
+                    },
+                    body: payload.toString()
+                });
+    
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    return c.json({ message: "Failed to disable subscription", error: errorData });
+                }
+    
+                const data = await response.json();
+                return c.json({ data });
+            } catch (error) {
+                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                return c.json({ message: 'Error processing webhook', error: errorMessage }, 500);
+            }
+        }
+    )    
     
 
 export default app;

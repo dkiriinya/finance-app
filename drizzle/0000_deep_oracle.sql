@@ -20,6 +20,18 @@ CREATE TABLE IF NOT EXISTS "mpesa_statements_pdfs" (
 	"userId" text NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "subscriptions" (
+	"id" text PRIMARY KEY NOT NULL,
+	"userId" text,
+	"paystackId" text NOT NULL,
+	"subscription_status" text NOT NULL,
+	"next_payment_date" timestamp NOT NULL,
+	"subscription_code" text,
+	"isPaid" boolean NOT NULL,
+	"email_token" text,
+	CONSTRAINT "subscriptions_paystackId_unique" UNIQUE("paystackId")
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "transactions" (
 	"id" text PRIMARY KEY NOT NULL,
 	"amount" integer NOT NULL,

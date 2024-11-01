@@ -26,18 +26,10 @@ export const SubscriptionForm = () => {
         publicKey,
         plan: planId,
         text: "Upgrade Now for KES 299/month",
-        metadata: {
-            custom_fields: [
-                {
-                    display_name: "User ID",
-                    variable_name: "userId",
-                    value: userId,
-                },
-            ],
-        },
+        phone: userId,
         onSuccess: () => {
             toast.success("Payment Successful");
-            window.location.href = "/";
+            window.location.href = "/payment-successful";
             
         },
         onClose: () => {

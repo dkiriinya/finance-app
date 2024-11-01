@@ -1,20 +1,23 @@
 'use client'
 
-import {z} from "zod";
 import { CreditCard, X } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Switch } from '@/components/ui/switch'
 import { SubscriptionForm } from '@/features/subscriptions/components/subscription-form'
+import { Unsubscribe } from "./unsubscribe";
 
 type Props = {
+  id:string
   subscription_status: string
   next_payment_date: Date
   isPaid: boolean;
+  email_token: string;
+  subscription_code: string;
 }
 
-export function SubscriptionStatus({ subscription_status,next_payment_date,isPaid}: Props) {
-  const isNonRenew = subscription_status === "not_renew";
+export function SubscriptionStatus({ subscription_status,next_payment_date,isPaid,id,email_token,subscription_code}: Props) {
+  const isNonRenew = subscription_status === "not renewing";
 
   return (
     <Card>
@@ -45,7 +48,7 @@ export function SubscriptionStatus({ subscription_status,next_payment_date,isPai
     
               </p>
               <p className="text-sm text-muted-foreground">
-                {isNonRenew || !isPaid ? `` : `next payment date: ${next_payment_date}`}
+                {isNonRenew || !isPaid ? `` : `next payment date: ${next_payment_date.toLocaleDateString()}`}
     
               </p>
             </div>
@@ -58,10 +61,10 @@ export function SubscriptionStatus({ subscription_status,next_payment_date,isPai
       <CardFooter>
         <Button
           variant={isPaid ? "destructive" : "default"}
-          className="w-full"
+          className=""
           disabled={isNonRenew}
         >
-          {isPaid ? (isNonRenew ? "Unsubscribed" : "Unsubscribe") : <SubscriptionForm />}
+          {isPaid ? (isNonRenew ? "Unsubscribed" : <Unsubscribe id={id} email_token={email_token} subscription_code={subscription_code} />) : <SubscriptionForm />}
         </Button>
       </CardFooter>
     </Card>

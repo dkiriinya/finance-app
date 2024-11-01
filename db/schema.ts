@@ -72,7 +72,7 @@ export const insertMpesaStatementsPdfsSchema = createInsertSchema(mpesa_statemen
 export const subscriptions = pgTable("subscriptions",{
     id: text("id").primaryKey(),
     userId:text("userId"),
-    paystackId:text("paystackId").notNull(),
+    paystackId:text("paystackId").notNull().unique(),
     subscription_status: text("subscription_status").notNull(),
     next_payment_date: timestamp("next_payment_date").notNull(),
     subscription_code:text("subscription_code"),

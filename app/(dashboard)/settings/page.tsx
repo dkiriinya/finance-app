@@ -1,13 +1,17 @@
 'use client'
+import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { useGetSubscription } from "@/features/subscriptions/api/use-get-subscription";
 import { SubscriptionStatus } from "@/features/settings/components/subscription-settings";
 import { Help_Section } from "@/features/settings/components/help-section";
 import { Faqs } from "@/features/settings/components/faqs";
-import { useGetSubscription } from "@/features/subscriptions/api/use-get-subscription";
-import { useUser } from "@clerk/nextjs";
+
 import { Skeleton } from "@/components/ui/skeleton";
-import { useEffect, useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { HelpCircle, CreditCard, BookOpen, Search } from 'lucide-react'
 
 export default function SettingsPage() {
   const { user, isLoaded } = useUser();
@@ -23,84 +27,80 @@ export default function SettingsPage() {
 
   if (subscriptionQuery.isLoading) {
     return (
-      <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
-        <Card className="border-none drop-shadow-sm">
-          <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-            <CardTitle className="text-xl line-clamp-1">
-              <Skeleton className="h-7 w-48" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="md:col-span-2 space-y-4">
-                <Card>
-                  <CardHeader>
-                    <Skeleton className="h-6 w-32" />
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-3/4" />
-                    <Skeleton className="h-10 w-full" />
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <Skeleton className="h-6 w-40" />
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-5/6" />
-                    <div className="flex justify-between items-center">
-                      <Skeleton className="h-10 w-24" />
-                      <Skeleton className="h-10 w-24" />
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-              <div>
-                <Card>
-                  <CardHeader>
-                    <Skeleton className="h-6 w-24" />
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {[...Array(5)].map((_, index) => (
-                      <div key={index} className="space-y-2">
-                        <Skeleton className="h-4 w-full" />
-                        <Skeleton className="h-4 w-5/6" />
+      <div className="max-w-screen-3xl mx-auto w-full pb-10 -mt-24">
+        <Tabs defaultValue="enquiries" className="border-none drop-shadow-sm">
+          <TabsList className="grid w-full grid-cols-3">
+            {[...Array(3)].map((_, index) => (
+              <TabsTrigger key={index} value={`tab-${index}`} disabled>
+                <Skeleton className="w-4 h-4 mr-2 rounded-full" />
+                <Skeleton className="w-24 h-4" />
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          <TabsContent value="enquiries">
+            <div className="space-y-4">
+              {[...Array(1)].map((_, index) => (
+                <div key={index} className="flex flex-col space-y-2">
+                   <Card>
+                    <CardHeader className="space-y-2">
+                      <Skeleton className="h-6 w-3/4" />
+                      <Skeleton className="h-4 w-full" />
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-1/4" />
+                        <Skeleton className="h-10 w-full" />
                       </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              </div>
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-1/4" />
+                        <Skeleton className="h-32 w-full" />
+                      </div>
+                      <Skeleton className="h-10 w-1/3" />
+                    </CardContent>
+                  </Card>
+                </div>
+              ))}
             </div>
-          </CardContent>
-        </Card>
+          </TabsContent>
+        </Tabs>
       </div>
-    );
+    )
   }
 
   return (
-    <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
-      <Card className="border-none drop-shadow-sm">
-        <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-          <CardTitle className="text-xl line-clamp-1">Settings & Support</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="md:col-span-2 space-y-4">
-              <Help_Section />
-              <SubscriptionStatus 
-                subscription_status={subscriptionQuery.data?.subscription_status ?? ""}
-                next_payment_date={new Date(subscriptionQuery.data?.next_payment_date ?? Date.now())}
-                isPaid={subscriptionQuery.data?.isPaid ?? false}
-              />
-            </div>
-            <div>
-              <Faqs />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="max-w-screen-3xl mx-auto w-full pb-10 -mt-24">
+      <Tabs defaultValue="enquiries" className="border-none drop-shadow-sm">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="enquiries">
+            <HelpCircle className="w-4 h-4 mr-2" />
+            General Enquiries
+          </TabsTrigger>
+          <TabsTrigger value="subscription">
+            <CreditCard className="w-4 h-4 mr-2" />
+            Manage Subscription
+          </TabsTrigger>
+          <TabsTrigger value="faqs">
+            <BookOpen className="w-4 h-4 mr-2" />
+            FAQs
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="enquiries">
+          <Help_Section />
+        </TabsContent>
+        <TabsContent value="subscription">
+          <SubscriptionStatus 
+            id={subscriptionQuery.data?.id ?? ""}
+            subscription_status={subscriptionQuery.data?.subscription_status ?? ""}
+            next_payment_date={new Date(subscriptionQuery.data?.next_payment_date ?? Date.now())}
+            isPaid={subscriptionQuery.data?.isPaid ?? false}
+            email_token={subscriptionQuery.data?.email_token ?? ""}
+            subscription_code={subscriptionQuery.data?.subscription_code ?? ""}
+          />
+        </TabsContent>
+        <TabsContent value="faqs">
+          <Faqs />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

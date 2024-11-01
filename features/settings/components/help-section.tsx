@@ -1,31 +1,53 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+
+import { useState } from "react"
+
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { LifeBuoy, Mail, MessageSquare } from "lucide-react"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
 
 export function Help_Section() {
+  const [enquirySubject, setEnquirySubject] = useState('')
+  const [enquiryMessage, setEnquiryMessage] = useState('')
+
+  const handleEnquirySubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+    console.log('Enquiry submitted:', { subject: enquirySubject, message: enquiryMessage })
+    setEnquirySubject('')
+    setEnquiryMessage('')
+  }
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Need Help?</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="flex items-center space-x-2">
-          <LifeBuoy className="h-5 w-5 text-muted-foreground" />
-          <span className="text-sm">24/7 Support</span>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Mail className="h-5 w-5 text-muted-foreground" />
-          <span className="text-sm">support@example.com</span>
-        </div>
-        <form className="space-y-4">
-          <Textarea placeholder="How can we help you?" />
-          <Button className="w-full">
-            <MessageSquare className="mr-2 h-4 w-4" /> Send Message
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+          <CardHeader>
+            <CardTitle>General Enquiries</CardTitle>
+            <CardDescription>Have a question? We're here to help!</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleEnquirySubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="subject">Subject</Label>
+                <Input
+                  id="subject"
+                  value={enquirySubject}
+                  onChange={(e) => setEnquirySubject(e.target.value)}
+                  placeholder="What's your enquiry about?"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="message">Message</Label>
+                <Textarea
+                  id="message"
+                  value={enquiryMessage}
+                  onChange={(e) => setEnquiryMessage(e.target.value)}
+                  placeholder="Please provide details about your enquiry"
+                  required
+                />
+              </div>
+              <Button type="submit">Submit Enquiry</Button>
+            </form>
+          </CardContent>
+        </Card>
   )
 }
