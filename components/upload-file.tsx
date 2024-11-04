@@ -5,7 +5,7 @@ import { UploadFileForm } from "@/features/mpesa-imports/components/upload-file-
 import { toast } from "sonner";
 import { Dialog, DialogTrigger, DialogHeader, DialogTitle, DialogDescription, DialogContent } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { useCreateMpesaUpload } from "@/features/strapi/api/use-create-mpesa-statement-upload";
+import { useCreateMpesaUpload } from "@/features/strapi/mpesa-uploads/api/use-create-mpesa-statement-upload"; 
 import { ConvertToTxt } from "@/features/mpesa-imports/components/convert-to-txt";
 
 const strapiformSchema = z.object({

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { pdf_to_txt } from "@/lib/pdf_to_txt";
 import { useGetMpesaStatementPdf } from "../api/use-get-mpesa-statement-pdf";
-import { useDeleteMpesaStatementUpload } from "@/features/strapi/api/use-delete-mpesa-statement-upload";
+import { useDeleteMpesaStatementUpload } from "@/features/strapi/mpesa-uploads/api/use-delete-mpesa-statement-upload"; 
 import { useDeleteMpesaStatementPdf } from "../api/use-delete-mpesa-statement-pdf";
 import { LoadingDialog } from "@/components/loading-dialog";
 import { useBulkCreateTransactions } from "@/features/transactions/api/use-bulk-create-transactions";

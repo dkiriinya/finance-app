@@ -1,21 +1,35 @@
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
+import { useCreateClientResponse } from "@/features/strapi/client_responses/api/use-create-client-response"
+import { useUser } from "@clerk/nextjs"
 
 export function Help_Section() {
+  const { user, isLoaded } = useUser();
   const [enquirySubject, setEnquirySubject] = useState('')
   const [enquiryMessage, setEnquiryMessage] = useState('')
+  const createMutation = useCreateClientResponse()
+  
+  const [userEmail, setUserEmail] = useState<string | undefined>(undefined);
 
-  const handleEnquirySubmit = (event: React.FormEvent) => {
+  useEffect(() => {
+    if (user?.emailAddresses?.[0]?.emailAddress) {
+      setUserEmail(user.emailAddresses[0].emailAddress);
+    } 
+  }, [user, isLoaded]);
+
+  const handleEnquirySubmit =(event: React.FormEvent) => {
     event.preventDefault()
-    console.log('Enquiry submitted:', { subject: enquirySubject, message: enquiryMessage })
-    setEnquirySubject('')
-    setEnquiryMessage('')
+    createMutation.mutate({
+        email: userEmail ?? "",
+        subject: enquirySubject,
+        message: enquiryMessage
+      })
   }
   return (
     <Card>

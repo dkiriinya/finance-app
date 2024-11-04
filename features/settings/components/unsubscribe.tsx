@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -19,6 +19,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useCancelSubscription } from '@/features/subscriptions/api/use-cancel-subscription'
+import { useUser } from '@clerk/nextjs'
+import { useCreateUnsubscription } from '@/features/strapi/unsubscriptions/use-create-unsubscription'
 
 type Props = {
     id:string
@@ -29,13 +31,29 @@ type Props = {
 export  function Unsubscribe({id,email_token,subscription_code}:Props) {
   const [open, setOpen] = useState(false)
   const [reason, setReason] = useState('')
+  const { user, isLoaded } = useUser();
+
+  const [userEmail, setUserEmail] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (user?.emailAddresses?.[0]?.emailAddress) {
+      setUserEmail(user.emailAddresses[0].emailAddress);
+    } 
+  }, [user, isLoaded]);
+
 
   const unsubscribeMutation = useCancelSubscription(id)
+  const cancelSubscriptionMutation =useCreateUnsubscription()
 
-  const handleUnsubscribe = () => {
+  const handleUnsubscribe = (event: React.FormEvent) => {
+    event.preventDefault()
     unsubscribeMutation.mutate({
         email_token,
         subscription_code
+    })
+    cancelSubscriptionMutation.mutate({
+      email: userEmail ?? "",
+      reason: reason
     })
     setOpen(false)
   }

@@ -7,7 +7,7 @@ import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import {zValidator} from "@hono/zod-validator";
 import { insertMpesaStatementsPdfsSchema } from "@/db/schema";
 import {createId} from "@paralleldrive/cuid2";
-import { useDeleteMpesaStatementUpload } from '@/features/strapi/api/use-delete-mpesa-statement-upload';
+import { useDeleteMpesaStatementUpload } from '@/features/strapi/mpesa-uploads/api/use-delete-mpesa-statement-upload';
 
 const app = new Hono()
     .get("/",

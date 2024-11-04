@@ -14,7 +14,7 @@ const sql =  neon (process.env.DATABASE_URL!);
 
 const db = drizzle(sql);
 
-const SEED_USER_ID = "user_2hUqdy5XWUclS2VQDzZMqt8rRJ8";
+const SEED_USER_ID = "user_2lc1bVziNFFIZHUFeQ5ZzRu1fnO";
 
 const SEED_CATEGORIES = [
 { id: "category_1", name: "Food", userId: SEED_USER_ID, plaidId:null }, 
@@ -103,6 +103,7 @@ const main = async () => {
         await db. insert(accounts).values(SEED_ACCOUNTS).execute();
          // Seed transactions
         await db.insert(transactions).values(SEED_TRANSACTIONS).execute();  
+        console.log("successful seeding!")
     }catch (error){
         console.error("Error during seed:", error); 
         process.exit(1);  

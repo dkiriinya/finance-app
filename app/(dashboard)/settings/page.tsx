@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 
-
 import { useGetSubscription } from "@/features/subscriptions/api/use-get-subscription";
 import { SubscriptionStatus } from "@/features/settings/components/subscription-settings";
 import { Help_Section } from "@/features/settings/components/help-section";
@@ -10,8 +9,8 @@ import { Faqs } from "@/features/settings/components/faqs";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { HelpCircle, CreditCard, BookOpen, Search } from 'lucide-react'
+import { Card, CardContent, CardHeader} from "@/components/ui/card";
+import { HelpCircle, CreditCard, BookOpen} from 'lucide-react'
 
 export default function SettingsPage() {
   const { user, isLoaded } = useUser();
@@ -68,7 +67,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="max-w-screen-3xl mx-auto w-full pb-10 -mt-24">
+    <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
       <Tabs defaultValue="enquiries" className="border-none drop-shadow-sm">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="enquiries">
