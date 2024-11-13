@@ -5,8 +5,8 @@ import accounts from './accounts'
 import categories from './categories'
 import transactions from './transactions'
 import summary from './summary'
-
-export const runtime = 'edge';
+import mpesa_statements_pdfs from './mpesa_statements_pdfs'
+import subscriptions from './subscriptions';
 
 const app = new Hono().basePath('/api')
 
@@ -15,6 +15,8 @@ const routes = app
     .route("/categories", categories)
     .route("/transactions", transactions)
     .route("/summary", summary)
+    .route("/mpesa_statements_pdfs",mpesa_statements_pdfs)
+    .route("/subscriptions",subscriptions)
 
     
 export const GET = handle(app)

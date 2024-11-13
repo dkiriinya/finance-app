@@ -51,7 +51,7 @@ const CategoriesPage = () => {
                 <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
                     <CardTitle className="text-xl line-clamp-1">Categories Page</CardTitle>
                     <Button onClick={newCategory.onOpen} size="sm">
-                        Add new
+                        Add new category
                     </Button>
                 </CardHeader>
                 <CardContent className="pt-0">

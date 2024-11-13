@@ -26,15 +26,17 @@ import { PieVariant } from "./pie-variant";
 import { RadarVariant } from "./radar-variant";
 import { RadialVariant } from "./radial-variant";
 import { Skeleton } from "./ui/skeleton";
+import { PaywallDialog } from "@/features/subscriptions/components/paywall-dialog";
 
 type Props = {
     data?:{
        name:string;
        value:number;
     }[];
+    isPaid: boolean | undefined
 };
 
-export const SpendingPie = ({data = []}:Props) => {
+export const SpendingPie = ({data = [],isPaid}:Props) => {
 
     const [chartType,setChartType] = useState("pie");
 
@@ -52,9 +54,15 @@ export const SpendingPie = ({data = []}:Props) => {
                         defaultValue={chartType}
                         onValueChange={onTypeChange}
                 >
-                    <SelectTrigger className="lg:w-auto h-9 rounded-md px-3">
-                        <SelectValue placeholder="Chart Type" />
-                    </SelectTrigger>
+                    {isPaid ? (
+                        <SelectTrigger className="lg:w-auto h-9 rounded-md px-3">
+                            <SelectValue placeholder="Chart Type" />
+                        </SelectTrigger>
+                    ) : (
+                        <PaywallDialog
+                            featureName="Access Different Chart Types"
+                        />
+                    )}
                     <SelectContent>
                         <SelectItem value="pie">
                             <div className="flex items-center">

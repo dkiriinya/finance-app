@@ -17,6 +17,7 @@ import { AreaVariant } from "./area-variant";
 import { BarVariant } from "./bar-variant";
 import { LineVariant } from "./line-variant";
 import { Skeleton } from "./ui/skeleton";
+import { PaywallDialog } from "@/features/subscriptions/components/paywall-dialog";
 
 type Props = {
     data?:{
@@ -24,9 +25,10 @@ type Props = {
         income:number;
         expenses:number;
     }[];
+    isPaid:boolean | undefined
 };
 
-export const Chart = ({data = []}:Props) => {
+export const Chart = ({data = [],isPaid}:Props) => {
 
     const [chartType,setChartType] = useState("area");
 
@@ -44,9 +46,15 @@ export const Chart = ({data = []}:Props) => {
                         defaultValue={chartType}
                         onValueChange={onTypeChange}
                 >
-                    <SelectTrigger className="lg:w-auto h-9 rounded-md px-3">
-                        <SelectValue placeholder="Chart Type" />
-                    </SelectTrigger>
+                    {isPaid ? (
+                        <SelectTrigger className="lg:w-auto h-9 rounded-md px-3">
+                            <SelectValue placeholder="Chart Type" />
+                        </SelectTrigger>
+                    ) : (
+                        <PaywallDialog
+                            featureName="Access Different Chart Types"
+                        />
+                    )}
                     <SelectContent>
                         <SelectItem value="area">
                             <div className="flex items-center">

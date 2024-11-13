@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1718865568544,
-      "tag": "0000_luxuriant_praxagora",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1719046382322,
-      "tag": "0001_round_runaways",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1719162112134,
-      "tag": "0002_daily_black_widow",
+      "when": 1731497029595,
+      "tag": "0000_colorful_scarlet_spider",
       "breakpoints": true
     }
   ]
