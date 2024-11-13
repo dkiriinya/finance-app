@@ -19,6 +19,8 @@ import { Loader2 } from "lucide-react";
 import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete";
 
 
+
+
 const AccountsPage = () => {
     const newAccount = useNewAccount();
     const accountsQuery = useGetAccounts();

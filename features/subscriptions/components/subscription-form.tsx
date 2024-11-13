@@ -30,6 +30,7 @@ export const SubscriptionForm = () => {
         onSuccess: () => {
             toast.success("Payment Successful");
             window.location.href = "/payment-successful";
+            window.location.reload();
             
         },
         onClose: () => {
